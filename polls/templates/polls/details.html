@@ -1,32 +1,20 @@
 {% extends 'polls/template.html' %}
 {% block title %}Sorular{% endblock %}
 {% block content %}
-    {% if question %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Soru</th>
-                <th scope="col">Yayın Tarihi</th>
-                <th scope="col">Oylar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">{{question.id}}</th>
-                <td>{{question.question_text}}</td>
-                <td>{{question.pub_date}}</td>
-                <td>
-                    <ul>
-                        {% for choices in question.choice_set.all %}
-                            <li>{{choices.choice_text}}</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    {% else %}
-    <p>Soru bulunamadı!</p>
-    {% endif %}
+    <form action="{% url 'polls:vote' question.id %}" method="post" class="form-check">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{ question.question_text }}</h1></legend>
+            {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+            {% endif %}
+            {% for choice in question.choice_set.all %}
+                <input type="radio" class="form-check-input" name="choice" id="choice{{ forloop.counter }}" value={{choice.id}}>
+                <label for="choice{{ forloop.counter }}" class="form-check-label">{{ choice.choice_text }}</label>
+                <br>
+            {% endfor %}
+        </fieldset>
+        <input class="form-control" type="submit" value="Vote">
+
+    </form>
 {% endblock %}

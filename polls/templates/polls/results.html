@@ -1,0 +1,15 @@
+{% extends 'polls/template.html' %}
+{% block title %}Sonuçlar{% endblock %}
+{% block content %}
+<div class="card" style="width: 18rem;">
+    <h1>{{ question.question_text }}</h1>
+
+    <ul class="text-center">
+    {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} Oy</li>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'polls:details' question.id %}" class="btn btn-primary">Tekrar oyla?</a>
+</div>
+{% endblock %}
