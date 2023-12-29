@@ -1,14 +1,14 @@
 {% extends 'polls/template.html' %}
 {% block title %}Sorular{% endblock %}
 {% block content %}
-    <form action="{% url 'polls:vote' question.id %}" method="post" class="form-check">
+    <form action="{% url 'polls:vote' questions.id %}" method="post" class="form-check">
         {% csrf_token %}
         <fieldset>
-            <legend><h1>{{ question.question_text }}</h1></legend>
+            <legend><h1>{{ questions.question_text }}</h1></legend>
             {% if error_message %}
                 <div class="alert alert-danger">{{ error_message }}</div>
             {% endif %}
-            {% for choice in question.choice_set.all %}
+            {% for choice in questions.choice_set.all %}
                 <input type="radio" class="form-check-input" name="choice" id="choice{{ forloop.counter }}" value={{choice.id}}>
                 <label for="choice{{ forloop.counter }}" class="form-check-label">{{ choice.choice_text }}</label>
                 <br>

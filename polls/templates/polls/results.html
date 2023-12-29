@@ -5,11 +5,11 @@
     <h1>{{ question.question_text }}</h1>
 
     <ul class="text-center">
-    {% for choice in question.choice_set.all %}
+    {% for choice in questions.choice_set.all %}
         <li>{{ choice.choice_text }} -- {{ choice.votes }} Oy</li>
     {% endfor %}
     </ul>
 
-    <a href="{% url 'polls:details' question.id %}" class="btn btn-primary">Tekrar oyla?</a>
+    <a href="{% url 'polls:details' questions.id %}" class="btn btn-primary">Tekrar oyla?</a>
 </div>
 {% endblock %}
